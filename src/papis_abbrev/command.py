@@ -55,8 +55,5 @@ def cli(
             )
             continue
 
-        lang = doc.get("language")
-        langs = [lang] if lang else None
-
-        doc[journal_key] = abbrev(journal, remove_part=True, langs=langs)
+        doc[journal_key] = abbrev(journal, remove_part=True)
         papis.api.save_doc(doc)
