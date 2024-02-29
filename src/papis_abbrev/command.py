@@ -24,7 +24,6 @@ logger = papis.logging.get_logger(__name__)
 @papis.cli.sort_option()
 @click.option(
     "--journal-key",
-    "journal_jey",
     help="Key name used by the abbreviated journal name",
     type=str,
     default="journal_abbrev",
