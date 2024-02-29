@@ -50,7 +50,7 @@ codespell:		## Run codespell checks over the documentation
 		--skip _build \
 		--uri-ignore-words-list '*' \
 		--ignore-words .codespell-ignore \
-		src test docs
+		src test
 	@echo -e "\e[1;32mcodespell clean!\e[0m"
 .PHONY: codespell
 
@@ -70,8 +70,7 @@ manifest:		## Update MANIFEST.in file
 
 REQUIREMENTS=\
 	requirements.txt \
-	requirements-dev.txt \
-	docs/requirements.txt
+	requirements-dev.txt
 
 requirements.txt: pyproject.toml
 	uv pip compile --upgrade --resolution highest \
@@ -80,15 +79,9 @@ requirements.txt: pyproject.toml
 
 requirements-dev.txt: pyproject.toml
 	uv pip compile --upgrade --resolution highest \
-		--extra dev --extra docs \
+		--extra dev \
 		-o $@ $<
 .PHONY: requirements-dev.txt
-
-docs/requirements.txt: pyproject.toml
-	uv pip compile --upgrade --resolution highest \
-		--extra docs \
-		-o $@ $<
-.PHONY: docs/requirements.txt
 
 pin: $(REQUIREMENTS) 	## Pin dependencies versions to requirements.txt
 .PHONY: pin
