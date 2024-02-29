@@ -37,8 +37,8 @@ def cli(
     sort_field: str | None,
     sort_reverse: bool,
 ) -> None:
-    documents = papis.cli.handle_doc_folder_query_all_sort(  # type: ignore[arg-type,unused-ignore]
-        query, doc_folder, sort_field, sort_reverse, _all
+    documents = papis.cli.handle_doc_folder_query_all_sort(
+        query, doc_folder, sort_field, sort_reverse, _all  # type: ignore[arg-type,unused-ignore]
     )
     if not documents:
         logger.warning(papis.strings.no_documents_retrieved_message)
