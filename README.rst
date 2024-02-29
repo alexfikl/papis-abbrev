@@ -9,7 +9,7 @@ This command uses `pyiso4 <https://github.com/pierre-24/pyiso4>`__ to abbreviate
 journal names. The abbreviated journals are added to the document under a new
 key. It can be used as
 
-..code:: sh
+.. code:: sh
 
     papis abbrev --journal-key journal_abbrev --all <QUERY>
 
