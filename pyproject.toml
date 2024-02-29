@@ -1,0 +1,134 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=42",
+    "wheel",
+]
+
+[project]
+name = "papis-abbrev"
+version = "0.1.0"
+description = "Papis plugin that abbreviates journals according to LWTA"
+readme = "README.md"
+keywords = [
+    "bibliography",
+]
+license = { text = "MIT" }
+maintainers = [{ name = "Alexandru Fikl", email = "alexfikl@gmail.com" }]
+authors = [{ name = "Alexandru Fikl", email = "alexfikl@gmail.com" }]
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "papis>=0.13",
+    "pyiso4>=0.1.6",
+]
+[project.optional-dependencies]
+dev = [
+    "check-manifest",
+    "codespell",
+    "mypy",
+    "pytest",
+    "reuse",
+    "ruff",
+    "uv",
+]
+docs = [
+    "sphinx",
+    "sphinx-book-theme",
+    "sphinx-click",
+]
+[project.urls]
+Repository = "https://github.com/alexfikl/papis-abbrev"
+[project.entry-points."papis.command"]
+abbrev = "papis_abbrev.command:cli"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+packages = { find = { where = ["src"] } }
+
+[tool.setuptools.package-data]
+papis_abbrev = ["py.typed"]
+
+[tool.ruff]
+preview = true
+target-version = "py38"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "A",        # flake8-builtins
+    "B",        # flake8-bugbear
+    "C4",       # flake8-comprehensions
+    "E",        # flake8
+    "F",        # flake8
+    "FBT",      # flake8-boolean-trap
+    "G",        # flake8-logging-format
+    "I",        # flake8-isort
+    "ISC",      # flake8-implicit-str-concat
+    "N",        # pep8-naming
+    "PL",       # pylint
+    "Q",        # flake8-quotes
+    "RUF",      # ruff
+    "S",        # flake8-bandit
+    "SIM",      # flake8-simplify
+    "UP",       # pyupgrade
+    "W",        # flake8
+]
+ignore = [
+    "E402",     # module-import-not-at-top-of-file
+    "FBT001",   # boolean
+    "ISC001",   # single-line-implicit-string-concatenation
+    "PLC0415",  # import-outside-top-level
+    "PLR0911",  # too-many-return-statements
+    "PLR0912",  # too-many-branches
+    "PLR0913",  # too-many-arguments
+    "PLR0914",  # too-many-locals
+    "PLR0915",  # too-many-statements
+    "PLR0917",  # too-many-positional
+    "PLR2004",  # magic-value-comparison
+    "S101",     # assert
+    "S102",     # exec-builtin
+    "S311",
+    "UP037",    # quoted-annotation
+]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+inline-quotes = "double"
+multiline-quotes = "double"
+
+[tool.ruff.lint.isort]
+known-first-party = ["papis", "papis_abbrev"]
+
+[tool.check-manifest]
+ignore = [
+    "*.yml",
+    "*.yaml",
+    ".ci/*",
+]
+
+[tool.mypy]
+strict = true
+hide_error_codes = false
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+    "pyiso4.*",
+]
+ignore_missing_imports = true
