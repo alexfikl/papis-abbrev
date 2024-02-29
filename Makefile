@@ -41,7 +41,7 @@ ruff:			## Run ruff checks over the source code
 .PHONY: ruff
 
 mypy:			## Run mypy checks over the source code
-	$(PYTHON) -m mypy src
+	$(PYTHON) -m mypy src test
 	@echo -e "\e[1;32mmypy (strict) clean!\e[0m"
 .PHONY: mypy
 
@@ -50,7 +50,7 @@ codespell:		## Run codespell checks over the documentation
 		--skip _build \
 		--uri-ignore-words-list '*' \
 		--ignore-words .codespell-ignore \
-		src test
+		src test docs
 	@echo -e "\e[1;32mcodespell clean!\e[0m"
 .PHONY: codespell
 
