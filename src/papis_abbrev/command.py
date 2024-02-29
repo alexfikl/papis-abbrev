@@ -37,7 +37,7 @@ def cli(
     sort_field: str | None,
     sort_reverse: bool,
 ) -> None:
-    documents = papis.cli.handle_doc_folder_query_all_sort(
+    documents = papis.cli.handle_doc_folder_query_all_sort(  # type: ignore[arg-type]
         query, doc_folder, sort_field, sort_reverse, _all
     )
     if not documents:
