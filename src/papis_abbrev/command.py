@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import click
 
-import papis.api
 import papis.cli
 import papis.config
 import papis.document
@@ -15,7 +14,48 @@ import papis.strings
 logger = papis.logging.get_logger(__name__)
 
 
-@click.command("abbrev")
+# {{{ utils
+
+
+def abbreviate(
+    docs: list[papis.document.Document],
+    journal_key: str = "journal_abbrev",
+) -> list[papis.document.Document]:
+    from pyiso4.ltwa import Abbreviate
+
+    abbrev = Abbreviate.create()
+    for doc in docs:
+        journal = doc.get("journal")
+        if not journal:
+            logger.warning(
+                "Document has no 'journal' key: %s", papis.document.describe(doc)
+            )
+            continue
+
+        doc[journal_key] = abbrev(journal, remove_part=True)
+
+    return docs
+
+
+# }}}
+
+
+# {{{ abbrev
+
+
+@click.group("abbrev")
+@click.help_option("--help", "-h")
+def cli() -> None:
+    """Manage journal abbreviations according to LTWA"""
+
+
+# }}}
+
+
+# {{{ add
+
+
+@cli.command("add")
 @click.help_option("--help", "-h")
 @papis.cli.git_option()
 @papis.cli.query_argument()
@@ -28,7 +68,7 @@ logger = papis.logging.get_logger(__name__)
     type=str,
     default="journal_abbrev",
 )
-def cli(
+def cli_add(
     query: str,
     journal_key: str,
     git: bool,
@@ -37,27 +77,45 @@ def cli(
     sort_field: str | None,
     sort_reverse: bool,
 ) -> None:
+    """Add journal abbreviations to documents."""
+
     documents = papis.cli.handle_doc_folder_query_all_sort(
         query,
-        doc_folder,
+        doc_folder,  # type: ignore[arg-type,unused-ignore]
         sort_field,
         sort_reverse,
-        _all,  # type: ignore[arg-type,unused-ignore]
+        _all,
     )
     if not documents:
         logger.warning(papis.strings.no_documents_retrieved_message)
         return
 
-    from pyiso4.ltwa import Abbreviate
+    from papis.api import save_doc
 
-    abbrev = Abbreviate.create()
+    documents = abbreviate(documents, journal_key=journal_key)
     for doc in documents:
-        journal = doc.get("journal")
-        if not journal:
-            logger.warning(
-                "Document has no 'journal' key: %s", papis.document.describe(doc)
-            )
-            continue
+        save_doc(doc)
 
-        doc[journal_key] = abbrev(journal, remove_part=True)
-        papis.api.save_doc(doc)
+
+# }}}
+
+# {{{
+
+
+@cli.command("bibtex")
+@click.help_option("--help", "-h")
+@click.argument("bibfile", type=click.Path(), required=True)
+def cli_bibtex(bibfile: str) -> None:
+    """Add journal abbreviations to BibTeX files."""
+    from papis.bibtex import bibtex_to_dict
+
+    docs = [papis.document.from_data(d) for d in bibtex_to_dict(bibfile)]
+    abbreviate(docs, journal_key="journal")
+
+    from papis.bibtex import exporter
+
+    with open(bibfile, "w", encoding="utf-8") as outf:
+        outf.write(exporter(docs))
+
+
+# }}}
