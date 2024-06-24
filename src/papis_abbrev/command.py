@@ -39,7 +39,6 @@ def abbreviate(
 
 # }}}
 
-
 # {{{ abbrev
 
 
@@ -50,7 +49,6 @@ def cli() -> None:
 
 
 # }}}
-
 
 # {{{ add
 
@@ -77,7 +75,7 @@ def cli_add(
     sort_field: str | None,
     sort_reverse: bool,
 ) -> None:
-    """Add journal abbreviations to documents."""
+    """Add journal abbreviations to documents"""
 
     documents = papis.cli.handle_doc_folder_query_all_sort(
         query,
@@ -99,14 +97,21 @@ def cli_add(
 
 # }}}
 
-# {{{
+# {{{ bibtex
 
 
 @cli.command("bibtex")
 @click.help_option("--help", "-h")
 @click.argument("bibfile", type=click.Path(), required=True)
-def cli_bibtex(bibfile: str) -> None:
-    """Add journal abbreviations to BibTeX files."""
+@click.option(
+    "-o",
+    "--outfile",
+    default=None,
+    type=click.Path(),
+    help="Output file for the BibTeX entries with abbreviated journal names.",
+)
+def cli_bibtex(bibfile: str, outfile: str | None) -> None:
+    """Add journal abbreviations to BibTeX files"""
     from papis.bibtex import bibtex_to_dict
 
     docs = [papis.document.from_data(d) for d in bibtex_to_dict(bibfile)]
@@ -114,8 +119,29 @@ def cli_bibtex(bibfile: str) -> None:
 
     from papis.bibtex import exporter
 
-    with open(bibfile, "w", encoding="utf-8") as outf:
-        outf.write(exporter(docs))
+    if outfile is None:
+        click.echo(exporter(docs))
+    else:
+        logger.info("Writing abbreviated BibTeX file: '%s'.", outfile)
+
+        with open(outfile, "w", encoding="utf-8") as outf:
+            outf.write(exporter(docs))
+
+
+# }}}
+
+# {{{ journal
+
+
+@cli.command("journal")
+@click.help_option("--help", "-h")
+@click.argument("journal", nargs=-1, required=True)
+def cli_journal(journal: list[str]) -> None:
+    """Abbreviate a single journal name"""
+    from pyiso4.ltwa import Abbreviate
+
+    abbrev = Abbreviate.create()
+    click.echo(abbrev(" ".join(journal).title(), remove_part=True))
 
 
 # }}}
