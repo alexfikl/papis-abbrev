@@ -11,11 +11,18 @@ key. It can be used as
 
 .. code:: sh
 
-    papis abbrev --journal-key journal_abbrev --all <QUERY>
+    papis abbrev add --journal-key journal_abbrev --all <QUERY>
 
 When using BibTeX, it's best to set the ``bibtex-journal-key = journal_abbrev``
 in your Papis configuration file so that it can pick up the abbreviated journal
 name.
+
+The command can also read BibTeX files and directly abbreviate the journal names.
+This can be done using
+
+.. code:: sh
+
+   papis abbrev bibtex main.bib
 
 LICENSE
 =======
