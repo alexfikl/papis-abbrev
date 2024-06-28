@@ -68,12 +68,12 @@ REQUIREMENTS=\
 	requirements-dev.txt
 
 requirements.txt: pyproject.toml
-	uv pip compile --upgrade --resolution highest \
+	uv pip compile --upgrade --resolution highest --python-version '3.9'\
 		-o $@ $<
 .PHONY: requirements.txt
 
 requirements-dev.txt: pyproject.toml
-	uv pip compile --upgrade --resolution highest \
+	uv pip compile --upgrade --resolution highest --python-version '3.9' \
 		--extra dev \
 		-o $@ $<
 .PHONY: requirements-dev.txt
