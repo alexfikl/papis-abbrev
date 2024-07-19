@@ -6,7 +6,7 @@ beautifulsoup4==4.12.3
     # via papis
 bibtexparser==1.4.1
     # via papis
-certifi==2024.6.2
+certifi==2024.7.4
     # via requests
 chardet==5.2.0
     # via papis
