@@ -41,11 +41,11 @@ dependencies = [
     "pyiso4>=0.1.6",
 ]
 optional-dependencies.dev = [
-    "codespell",
     "mypy",
     "pytest",
     "reuse",
     "ruff",
+    "typos",
     "uv",
 ]
 optional-dependencies.docs = [
