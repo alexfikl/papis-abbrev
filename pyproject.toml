@@ -69,7 +69,7 @@ packages = [
 ]
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 88
 
 preview = true
@@ -119,6 +119,7 @@ lint.isort.known-first-party = [
 
 [tool.mypy]
 strict = true
+python_version = "3.9"
 hide_error_codes = false
 warn_unused_ignores = true
 
