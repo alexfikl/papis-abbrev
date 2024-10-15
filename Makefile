@@ -33,7 +33,7 @@ black:			## Run ruff format over the source code
 	@echo -e "\e[1;32mruff format clean!\e[0m"
 .PHONY: black
 
-lint: typos reuse ruff mypy		## Run all linting checks
+lint: typos reuse ruff mypy					## Run all linting checks
 
 typos:			## Run typos over the source code and documentation
 	@typos
@@ -64,12 +64,12 @@ REQUIREMENTS=\
 	requirements-dev.txt
 
 requirements.txt: pyproject.toml
-	uv pip compile --upgrade --resolution highest --python-version '3.9' \
+	uv pip compile --upgrade --resolution highest --python-version '3.10' \
 		-o $@ $<
 .PHONY: requirements.txt
 
 requirements-dev.txt: pyproject.toml
-	uv pip compile --upgrade --resolution highest --python-version '3.9' \
+	uv pip compile --upgrade --resolution highest --python-version '3.10' \
 		--extra dev \
 		-o $@ $<
 .PHONY: requirements-dev.txt
