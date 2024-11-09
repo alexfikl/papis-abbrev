@@ -79,7 +79,7 @@ def cli_add(
 
     documents = papis.cli.handle_doc_folder_query_all_sort(
         query,
-        doc_folder,  # type: ignore[arg-type,unused-ignore]
+        doc_folder,
         sort_field,
         sort_reverse,
         _all,

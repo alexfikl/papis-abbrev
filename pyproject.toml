@@ -37,7 +37,7 @@ classifiers = [
     "Topic :: Utilities",
 ]
 dependencies = [
-    "papis>=0.13",
+    "papis>=0.14",
     "pyiso4>=0.1.6",
 ]
 optional-dependencies.dev = [
