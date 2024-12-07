@@ -71,7 +71,7 @@ def cli_add(
     journal_key: str,
     git: bool,
     doc_folder: tuple[str, ...],
-    _all: bool,
+    all_: bool,
     sort_field: str | None,
     sort_reverse: bool,
 ) -> None:
@@ -82,7 +82,7 @@ def cli_add(
         doc_folder,
         sort_field,
         sort_reverse,
-        _all,
+        all_,
     )
     if not documents:
         logger.warning(papis.strings.no_documents_retrieved_message)
