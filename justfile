@@ -66,7 +66,7 @@ mypy:
 requirements_dev_txt:
     uv pip compile --upgrade --universal --python-version "3.10" \
         --extra dev \
-        -o requirements-test.txt pyproject.toml
+        -o requirements-dev.txt pyproject.toml
 
 [private]
 requirements_txt:
