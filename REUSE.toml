@@ -8,7 +8,7 @@ SPDX-PackageDownloadLocation = "https://github.com/alexfikl/papis-uefiscdi"
 
 [[annotations]]
 path = [
-    "Makefile",
+    "justfile",
     "README.rst",
     "pyproject.toml",
     "requirements*.txt",
