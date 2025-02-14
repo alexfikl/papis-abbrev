@@ -63,6 +63,11 @@ mypy:
 # {{{ pin
 
 [private]
+requirements_build_txt:
+    uv pip compile --upgrade --universal --python-version "3.10" \
+        -o requirements-build.txt requirements-build.in
+
+[private]
 requirements_dev_txt:
     uv pip compile --upgrade --universal --python-version "3.10" \
         --extra dev \
@@ -74,7 +79,7 @@ requirements_txt:
         -o requirements.txt pyproject.toml
 
 [doc("Pin dependency versions to requirements.txt")]
-pin: requirements_txt requirements_dev_txt
+pin: requirements_txt requirements_dev_txt requirements_build_txt
 
 # }}}
 # {{{ develop
@@ -90,8 +95,7 @@ develop:
 
 [doc("Editable install using pinned dependencies from requirements-dev.txt")]
 pip-install:
-    {{ PYTHON }} -m pip install --upgrade \
-        pip wheel editables hatchling setuptools poetry
+    {{ PYTHON }} -m pip install --verbose --requirement requirements-build.txt
     {{ PYTHON }} -m pip install \
         --verbose \
         --requirement requirements-dev.txt \
