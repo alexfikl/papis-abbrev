@@ -90,7 +90,8 @@ develop:
 
 [doc("Editable install using pinned dependencies from requirements-dev.txt")]
 pip-install:
-    {{ PYTHON }} -m pip install --upgrade pip wheel editables hatchling setuptools
+    {{ PYTHON }} -m pip install --upgrade \
+        pip wheel editables hatchling setuptools poetry
     {{ PYTHON }} -m pip install \
         --verbose \
         --requirement requirements-dev.txt \
