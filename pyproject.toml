@@ -118,7 +118,7 @@ lint.isort.known-first-party = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = "tests"
+testpaths = "test"
 addopts = [
     "-rswx",
     "--durations=25",
