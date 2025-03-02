@@ -80,7 +80,7 @@ packaging==24.2
     # via
     #   habanero
     #   pytest
-papis==0.14
+papis==0.14.1
     # via papis-abbrev (pyproject.toml)
 pbr==6.1.1
     # via stevedore
@@ -116,9 +116,9 @@ requests==2.32.3
     #   papis
 reuse==5.0.2
     # via papis-abbrev (pyproject.toml)
-ruff==0.9.6
+ruff==0.9.9
     # via papis-abbrev (pyproject.toml)
-setuptools==75.8.0
+setuptools==75.8.2
     # via pbr
 sgmllib3k==1.0.0
     # via feedparser
@@ -126,7 +126,7 @@ sniffio==1.3.1
     # via anyio
 soupsieve==2.6
     # via beautifulsoup4
-stevedore==5.4.0
+stevedore==5.4.1
     # via papis
 text-unidecode==1.3
     # via python-slugify
@@ -143,7 +143,7 @@ typing-extensions==4.12.2
     #   anyio
     #   beautifulsoup4
     #   mypy
-typos==1.29.7
+typos==1.30.0
     # via papis-abbrev (pyproject.toml)
 unidecode==1.3.8
     # via pyiso4
@@ -151,7 +151,7 @@ urllib3==2.2.0
     # via
     #   habanero
     #   requests
-uv==0.5.31
+uv==0.6.3
     # via papis-abbrev (pyproject.toml)
 wcwidth==0.2.13
     # via prompt-toolkit
