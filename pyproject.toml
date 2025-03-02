@@ -137,3 +137,8 @@ module = [
     "pyiso4.*",
 ]
 ignore_missing_imports = true
+
+[tool.typos.default]
+extend-ignore-re = [
+    "(?Rm)^.*#\\s*spell:\\s*disable$",
+]

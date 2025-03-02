@@ -11,4 +11,4 @@ def test_pyiso4() -> None:
 
     abbrev = ltwa.Abbreviate.create()
     result = abbrev("Journal of Computational Physics", remove_part=True)
-    assert result == "J. Comput. Phys."
+    assert result == "J. Comput. Phys."  # spell: disable
