@@ -4,6 +4,7 @@
 *.pyo
 *.swp
 *.csv
+pytest-results.xml
 
 # directories
 __pycache__
