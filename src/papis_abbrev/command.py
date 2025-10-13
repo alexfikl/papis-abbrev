@@ -3,13 +3,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import click
 
 import papis.cli
-import papis.config
-import papis.document
 import papis.logging
-import papis.strings
+
+if TYPE_CHECKING:
+    from papis.document import Document
 
 logger = papis.logging.get_logger(__name__)
 
@@ -18,18 +20,19 @@ logger = papis.logging.get_logger(__name__)
 
 
 def abbreviate(
-    docs: list[papis.document.Document],
+    docs: list[Document],
     journal_key: str = "journal_abbrev",
-) -> list[papis.document.Document]:
+) -> list[Document]:
     from pyiso4.ltwa import Abbreviate
 
     abbrev = Abbreviate.create()
+
+    from papis.document import describe
+
     for doc in docs:
         journal = doc.get("journal")
         if not journal:
-            logger.warning(
-                "Document has no 'journal' key: %s", papis.document.describe(doc)
-            )
+            logger.warning("Document has no 'journal' key: %s", describe(doc))
             continue
 
         doc[journal_key] = abbrev(journal, remove_part=True)
@@ -85,7 +88,9 @@ def cli_add(
         all_,
     )
     if not documents:
-        logger.warning(papis.strings.no_documents_retrieved_message)
+        from papis.strings import no_documents_retrieved_message
+
+        logger.warning(no_documents_retrieved_message)
         return
 
     from papis.api import save_doc
@@ -113,19 +118,20 @@ def cli_add(
 def cli_bibtex(bibfile: str, outfile: str | None) -> None:
     """Add journal abbreviations to BibTeX files"""
     from papis.bibtex import bibtex_to_dict
+    from papis.document import from_data
 
-    docs = [papis.document.from_data(d) for d in bibtex_to_dict(bibfile)]
+    docs = [from_data(d) for d in bibtex_to_dict(bibfile)]
     abbreviate(docs, journal_key="journal")
 
-    from papis.bibtex import exporter
+    from papis.bibtex import to_bibtex
 
     if outfile is None:
-        click.echo(exporter(docs))
+        click.echo("\n\n".join(to_bibtex(doc) for doc in docs))
     else:
         logger.info("Writing abbreviated BibTeX file: '%s'.", outfile)
 
         with open(outfile, "w", encoding="utf-8") as outf:
-            outf.write(exporter(docs))
+            outf.write("\n\n".join(to_bibtex(doc) for doc in docs))
 
 
 # }}}
