@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, TypeVar
 
 import click
 
@@ -13,6 +13,8 @@ import papis.logging
 if TYPE_CHECKING:
     from papis.document import Document
 
+    DocumentT = TypeVar("DocumentT", Document, dict[str, Any])
+
 logger = papis.logging.get_logger(__name__)
 
 
@@ -20,9 +22,9 @@ logger = papis.logging.get_logger(__name__)
 
 
 def abbreviate(
-    docs: list[Document],
+    docs: list[DocumentT],
     journal_key: str = "journal_abbrev",
-) -> list[Document]:
+) -> list[DocumentT]:
     from pyiso4.ltwa import Abbreviate
 
     abbrev = Abbreviate.create()
@@ -35,7 +37,7 @@ def abbreviate(
             logger.warning("Document has no 'journal' key: %s", describe(doc))
             continue
 
-        doc[journal_key] = abbrev(journal, remove_part=True)
+        doc[journal_key] = abbrev(journal.replace("\\", ""), remove_part=True)
 
     return docs
 
@@ -147,7 +149,7 @@ def cli_journal(journal: list[str]) -> None:
     from pyiso4.ltwa import Abbreviate
 
     abbrev = Abbreviate.create()
-    click.echo(abbrev(" ".join(journal).title(), remove_part=True))
+    click.echo(abbrev(" ".join(journal).title().replace("\\", ""), remove_part=True))
 
 
 # }}}

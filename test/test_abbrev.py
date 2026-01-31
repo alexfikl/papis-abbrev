@@ -3,12 +3,25 @@
 
 from __future__ import annotations
 
-import pytest
-
 
 def test_pyiso4() -> None:
-    ltwa = pytest.importorskip("pyiso4.ltwa")
+    from pyiso4.ltwa import Abbreviate
 
-    abbrev = ltwa.Abbreviate.create()
+    abbrev = Abbreviate.create()
     result = abbrev("Journal of Computational Physics", remove_part=True)
     assert result == "J. Comput. Phys."  # spell: disable
+
+
+def test_latex_encoding() -> None:
+    from pyiso4.ltwa import Abbreviate
+
+    # NOTE: pyiso4 will not handle the escaped \&, but our code will
+
+    abbrev = Abbreviate.create()
+    result = abbrev(r"Computers \& Mathematics With Applications", remove_part=True)
+    assert result == r"Comput.\& Math. Appl."  # spell: disable
+
+    from papis_abbrev.command import abbreviate
+
+    (result,) = abbreviate([{"journal": r"Computers \& Mathematics With Applications"}])
+    assert result["journal_abbrev"] == "Comput. Math. Appl."  # spell: disable

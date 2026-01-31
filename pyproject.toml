@@ -112,6 +112,11 @@ lint.isort.known-first-party = [
     "papis_abbrev",
 ]
 
+[tool.typos.default]
+extend-ignore-re = [
+    "(?Rm)^.*#\\s*spell:\\s*disable$",
+]
+
 [tool.pytest.ini_options]
 testpaths = "test"
 addopts = [
@@ -119,9 +124,4 @@ addopts = [
     "--durations=25",
     "--capture=no",
     "--verbose",
-]
-
-[tool.typos.default]
-extend-ignore-re = [
-    "(?Rm)^.*#\\s*spell:\\s*disable$",
 ]
