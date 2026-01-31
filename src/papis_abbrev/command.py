@@ -21,6 +21,17 @@ logger = papis.logging.get_logger(__name__)
 # {{{ utils
 
 
+def from_bibtex(data: dict[str, Any]) -> Document:
+    from papis.document import from_data
+
+    # TODO: Fix this in Papis: doing a roundtrip with BibTeX in Papis seems to
+    # double "escape" some characters, e.g. `\&` becomes `\textbackslash \&`.
+    return from_data({
+        key: value.replace("\\", "") if isinstance(value, str) else value
+        for key, value in data.items()
+    })
+
+
 def abbreviate(
     docs: list[DocumentT],
     journal_key: str = "journal_abbrev",
@@ -120,9 +131,8 @@ def cli_add(
 def cli_bibtex(bibfile: str, outfile: str | None) -> None:
     """Add journal abbreviations to BibTeX files"""
     from papis.bibtex import bibtex_to_dict
-    from papis.document import from_data
 
-    docs = [from_data(d) for d in bibtex_to_dict(bibfile)]
+    docs = [from_bibtex(d) for d in bibtex_to_dict(bibfile)]
     abbreviate(docs, journal_key="journal")
 
     from papis.bibtex import to_bibtex
