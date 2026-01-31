@@ -40,21 +40,15 @@ dependencies = [
     "papis>=0.14",
     "pyiso4>=0.1.6",
 ]
-optional-dependencies.dev = [
-    "pytest",
-    "reuse",
-    "ruff",
-    "ty",
-    "typos",
-    "uv",
-]
-optional-dependencies.docs = [
-    "sphinx",
-    "sphinx-book-theme",
-    "sphinx-click",
-]
+# NOTE: this is only here for readthedocs (keep in sync with the dependency group)
+optional-dependencies.docs = [ "sphinx>=6", "sphinx-autoapi", "sphinx-book-theme" ]
 urls.Repository = "https://github.com/alexfikl/papis-abbrev"
+
 entry-points."papis.command".abbrev = "papis_abbrev.command:cli"
+
+[dependency-groups]
+dev = [ "pyproject-fmt", "reuse", "typos", "uv" ]
+test = [ "pytest", "ruff", "ty" ]
 
 [tool.hatch.build.targets.sdist]
 exclude = [
