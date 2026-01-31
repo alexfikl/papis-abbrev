@@ -41,10 +41,10 @@ dependencies = [
     "pyiso4>=0.1.6",
 ]
 optional-dependencies.dev = [
-    "mypy",
     "pytest",
     "reuse",
     "ruff",
+    "ty",
     "typos",
     "uv",
 ]
@@ -126,18 +126,6 @@ addopts = [
     "--capture=no",
     "--verbose",
 ]
-
-[tool.mypy]
-strict = true
-python_version = "3.10"
-hide_error_codes = false
-warn_unused_ignores = true
-
-[[tool.mypy.overrides]]
-module = [
-    "pyiso4.*",
-]
-ignore_missing_imports = true
 
 [tool.typos.default]
 extend-ignore-re = [

@@ -37,7 +37,7 @@ justfmt:
 # {{{ linting
 
 [doc("Run all linting checks over the source code")]
-lint: typos reuse ruff mypy
+lint: typos reuse ruff ty
 
 [doc("Run typos over the source code and documentation")]
 typos format="brief":
@@ -54,10 +54,10 @@ ruff:
     ruff check src test
     @echo -e "\e[1;32mruff clean!\e[0m"
 
-[doc("Run mypy checks over the source code")]
-mypy:
-    {{ PYTHON }} -m mypy src
-    @echo -e "\e[1;32mmypy clean!\e[0m"
+[doc("Run ty checks over the source code")]
+ty:
+    ty check src test
+    @echo -e "\e[1;32mty clean!\e[0m"
 
 # }}}
 # {{{ pin
@@ -109,7 +109,7 @@ clean:
 
 [doc("Remove various temporary files and caches")]
 purge: clean
-    rm -rf .ruff_cache .pytest_cache .pytest-cache .mypy_cache tags
+    rm -rf .ruff_cache .pytest_cache .pytest-cache tags
 
 [doc("Regenerate ctags")]
 ctags:
