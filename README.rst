@@ -33,7 +33,7 @@ This can be done using
 
 Note that this will modify your BibTeX files quite heavily: it will remove
 comments, change formatting, etc. This is generally fine if you're working with
-a BibTeX formatted by Papis to begin with, but may cause friction otherwise.
+a BibTeX file formatted by Papis to begin with, but may cause friction otherwise.
 
 LICENSE
 =======
