@@ -43,29 +43,25 @@ dependencies = [
 # NOTE: this is only here for readthedocs (keep in sync with the dependency group)
 optional-dependencies.docs = [ "sphinx>=6", "sphinx-autoapi", "sphinx-book-theme" ]
 urls.Repository = "https://github.com/alexfikl/papis-abbrev"
-
 entry-points."papis.command".abbrev = "papis_abbrev.command:cli"
 
 [dependency-groups]
 dev = [ "pyproject-fmt", "reuse", "typos", "uv" ]
 test = [ "pytest", "ruff", "ty" ]
 
-[tool.hatch.build.targets.sdist]
-exclude = [
-    ".github",
-    ".ci",
-    "docs/_build",
-]
-
-[tool.hatch.build.targets.wheel]
-packages = [
+[tool.hatch]
+build.targets.wheel.packages = [
     "src/papis_abbrev",
+]
+build.targets.sdist.exclude = [
+    ".ci",
+    ".github",
+    "docs/_build",
 ]
 
 [tool.ruff]
 target-version = "py39"
 line-length = 88
-
 preview = true
 lint.select = [
     "A",   # flake8-builtins
@@ -112,14 +108,14 @@ lint.isort.known-first-party = [
     "papis_abbrev",
 ]
 
-[tool.typos.default]
-extend-ignore-re = [
+[tool.typos]
+default.extend-ignore-re = [
     "(?Rm)^.*#\\s*spell:\\s*disable$",
 ]
 
-[tool.pytest.ini_options]
-testpaths = "test"
-addopts = [
+[tool.pytest]
+ini_options.testpaths = "test"
+ini_options.addopts = [
     "-rswx",
     "--durations=25",
     "--capture=no",
