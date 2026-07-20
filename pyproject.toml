@@ -84,21 +84,21 @@ lint.select = [
     "W",   # flake8
 ]
 lint.ignore = [
-    "E402",    # module-import-not-at-top-of-file
-    "FBT001",  # boolean
-    "ISC001",  # single-line-implicit-string-concatenation
-    "PLC0415", # import-outside-top-level
-    "PLR0911", # too-many-return-statements
-    "PLR0912", # too-many-branches
-    "PLR0913", # too-many-arguments
-    "PLR0914", # too-many-locals
-    "PLR0915", # too-many-statements
-    "PLR0917", # too-many-positional
-    "PLR2004", # magic-value-comparison
-    "S101",    # assert
-    "S102",    # exec-builtin
-    "S311",
-    "UP037",   # quoted-annotation
+    "assert",
+    "boolean-type-hint-positional-argument",
+    "exec-builtin",
+    "import-outside-top-level",
+    "magic-value-comparison",
+    "module-import-not-at-top-of-file",
+    "quoted-annotation",
+    "single-line-implicit-string-concatenation",
+    "suspicious-non-cryptographic-random-usage",
+    "too-many-arguments",
+    "too-many-branches",
+    "too-many-locals",
+    "too-many-positional-arguments",
+    "too-many-return-statements",
+    "too-many-statements",
 ]
 lint.flake8-quotes.docstring-quotes = "double"
 lint.flake8-quotes.inline-quotes = "double"
